@@ -1,0 +1,53 @@
+import nog
+import nog.bar.components
+
+import keybindings
+import workspace
+import rules
+import modes.resize
+import plugins
+
+nog.bar.configure(#{
+    font_size: 16,
+    components: #{
+        center: [
+            components.current_window()
+        ],
+        right: [
+            components.fullscreen_indicator("fullscreen"),
+            components.padding(1),
+            components.active_mode(),
+            components.padding(1),
+            components.split_direction("|", "―"),
+            components.padding(1),
+            components.date("%Y-%m-%d"),
+            components.padding(1),
+            components.time("%H:%M"),
+            components.padding(2)
+        ]
+    }
+})
+
+var ignored = [
+    "ScreenSketch.exe",
+    "SnippingTool.exe",
+    "Taskmgr.exe"
+]
+
+var workspace_count = 10
+var direction_keys = #{
+    "J": "Down",
+    "K": "Up",
+    "L": "Left",
+    "OEM_1": "Right"
+}
+
+nog.config.enable("work_mode")
+nog.config.enable("display_app_bar")
+nog.config.enable("launch_on_startup")
+nog.config.enable("multi_monitor")
+nog.config.enable("remove_task_bar")
+
+workspace.init()
+keybindings.init(direction_keys, workspace_count)
+rules.init(ignored)
